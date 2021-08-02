@@ -16,3 +16,7 @@ use Illuminate\Support\Facades\Route;
 Route::get('/', function () {
     return view('welcome');
 });
+
+Route::get('/facebook', [\App\Http\Controllers\FacebookController::class, 'index']);
+Route::get('/account', [\App\Http\Controllers\FacebookController::class, 'account']);
+Route::get('/insight', [\App\Http\Controllers\FacebookController::class, 'insight']);
