@@ -27,6 +27,9 @@ class CreateAccountsTable extends Migration
             $table->string('refresh_token');
             $table->string('develop_token');
             $table->string('access_token');
+            $table->string('fb_exchange_token');
+            $table->string('client_id');
+            $table->string('client_secret');
             $table->integer('channel_id');
             $table->timestamps();
         });

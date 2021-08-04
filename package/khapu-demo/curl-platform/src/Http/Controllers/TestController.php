@@ -3,19 +3,25 @@
 namespace Khapu\CurlPlatform\Http\Controllers;
 use App\Http\Controllers\Controller;
 use App\Http\Controllers;
+use App\Models\Account;
 use Illuminate\Http\Request;
 use Khapu\CurlPlatform\Services\Reports\FacebookService;
 
 class TestController extends Controller
 {
-    public function __construct()
+
+    protected $facebookService;
+
+    public function __construct(FacebookService $facebookService)
     {
-        
+        $this->facebookService = $facebookService;
     }
 
+
+    // lấy thông tin của một campagin
     public function index()
     {
-        $testDetail = new FacebookService();
+
         $fields = [
             'fields' => 'account_currency,account_id,account_name,action_values,clicks,reach,cpm,cpc,ctr,spend,campaign_name,canvas_avg_view_time,conversions,conversion_values,cost_per_ad_click,cost_per_conversion,impressions',
             'date_preset' => 'last_year'
@@ -28,10 +34,56 @@ class TestController extends Controller
         // ];
 
         $token = [
-            'access_token' => 'EAAFxHGbIZBAcBAG92IEJEYqozU4qXXA6BuLYMq89kbr0h8kTwQZB8PX9qF9HZBKdt0Uwtto5b4n9xyPpdGiBmjay0IOkNcRkaLydEeIPEp1ZAgItZBI5GQML8fzqJoR5RH35pZAS7SecgUzD3tsJu9o3L7Qr864fgslDCvZApSWrQZDZD',
+            'access_token' => 'EAAFxHGbIZBAcBAC4eMeCsaNGgMHl9toCCnYn8JDq9dnhl1DoTZAXoinTsZBnB4CiZApl3DD1EFgyZAhRNqwKo0o6e84puxZB85ERzfooKIwNobyH9O3He1YPO8aR8DNfYyBopw2Vh3aE1x9UT3GDIpBgmnciZAlaTe3Lvtr4AZAZCSgHgNgxw1F4K',
         ];
+
+//        dd(Account::all());
         $params = ['id' => '23844819598520694'];
         // dd($testDetail->getLongTimeToken($fields));
-        dd($testDetail->getInsight($params, $token, $fields));
+        dd($this->facebookService->getInsight($params, $token, $fields));
+    }
+
+    // lấy thông tin của 1 account
+    public function getAccount($facebookId)
+    {
+        $facebookAccount = Account::where('facebook_id', $facebookId)->first();
+        if (!empty($facebookAccount)) {
+            $fields = [
+                'fields' => 'name,account_status,amount_spent,balance,disable_reason,min_daily_budget,min_campaign_group_spend_cap,spend_cap',
+            ];
+
+            $token = [
+                'access_token' => $facebookAccount->access_token,
+            ];
+
+            $params = [
+                'id' => $facebookId,
+            ];
+
+            dd($this->facebookService->getAccount($params, $token, $fields));
+        }
+    }
+
+
+    // lấy thông tin danh sách ads trong account
+    public function getAds($facebookId)
+    {
+        $facebookAccount = Account::where('facebook_id', $facebookId)->first();
+        if (!empty($facebookAccount)) {
+            $fields = [
+                'fields' => 'name,insights,effective_status,objective,total_count',
+                'time_range' => '{"since":"2019-10-01","until":"2020-10-01"}',
+            ];
+
+            $token = [
+                'access_token' => $facebookAccount->access_token,
+            ];
+
+            $params = [
+                'id' => $facebookId,
+            ];
+
+            dd($this->facebookService->getAds($params, $token, $fields));
+        }
     }
 }
