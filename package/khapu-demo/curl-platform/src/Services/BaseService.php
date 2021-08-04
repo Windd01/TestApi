@@ -122,7 +122,7 @@ class BaseService
     }
 
     public function get()
-    {   
+    {
         $response = false;
         $curl = curl_init();
         $fields = '';
@@ -132,8 +132,11 @@ class BaseService
             }
         }
         $curlopt_url = $this->url . '?' . $fields;
-        $header = $this->options['headers'];
-        // dd($header);
+        $header = [];
+        foreach ($this->options['headers'] as $k => $v) {
+            $newValue = $k . ': ' . $v;
+            array_push($header, $newValue);
+        }
         curl_setopt_array($curl, array(
             CURLOPT_URL => $curlopt_url,
             CURLOPT_RETURNTRANSFER => true,
@@ -143,7 +146,7 @@ class BaseService
             CURLOPT_FOLLOWLOCATION => true,
             CURLOPT_HTTP_VERSION => CURL_HTTP_VERSION_1_1,
             CURLOPT_CUSTOMREQUEST => 'GET',
-            CURLOPT_HTTPHEADER =>$header,
+            CURLOPT_HTTPHEADER => $header,
         ));
 
         $response = curl_exec($curl);
