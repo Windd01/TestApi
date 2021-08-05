@@ -201,12 +201,12 @@ class BaseService
     }
 
     /** 
-     *  @param array $options
+     *  @param array $query
      *  @return mixed
      * */
-    public function fields(array $fields = [])
+    public function query(array $query = [])
     {
-        $this->_formatOption($fields, 'query');
+        $this->_formatOption($query, 'query');
         return $this;
     }
 
@@ -216,14 +216,12 @@ class BaseService
         return $this;
     }
 
-    // public function fields() 
-
-    protected function _formatOption(array $fields = [], string $type = null): void
+    protected function _formatOption(array $options = [], string $type = null): void
     {
         if ($type != null) {
-            $fields[$type] = $fields;
+            $options[$type] = $options;
         }
-        $this->options = array_merge_recursive_distinct($this->options, $fields);
+        $this->options = array_merge_recursive_distinct($this->options, $options);
         if (!empty($this->token)) {
             $header = [];
             foreach ($this->token as $k => $v) {
@@ -244,13 +242,12 @@ class BaseService
         $this->stream();
         $response = (object)[];
         try {
-            $res = $this->guzzle->get($this->url, $this->options);
-            $content = $res->getBody()->getContents();
-            $response = json_decode($content);
-
+            $response = $this->guzzle->get($this->url, $this->options);
+            $response = json_decode($response->getBody()->getContents());
             if (isset($response->code) && $response->code != 200 && isset($response->message) && $response->message) {
                 $this->error(['url' => $this->url], 'GET', $response->code, $response->message);
             }
+
         } catch (ClientException $e) {
             $this->error(['url' => $this->url], 'GET', $e->getCode(), $e->getMessage());
         } catch (ServerException $e) {
@@ -268,9 +265,8 @@ class BaseService
         $response = (object)[];
         $this->stream();
         try {
-            $res = $this->guzzle->post($this->url, $this->options);
-            $content = $res->getBody()->getContents();
-            $response = json_decode($content);
+            $response = $this->guzzle->post($this->url, $this->options);
+            $response = json_decode($response->getBody()->getContents());
             if (isset($response->code) && $response->code != 200 && isset($response->message) && $response->message) {
                 $this->error(['url' => $this->url], 'POST', $response->code, $response->message);
             }
