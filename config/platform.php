@@ -25,7 +25,7 @@ return [
             'v8',
             'v2'
         ],
-        'slug' => [
+        'slugs' => [
             'account' => 'customer/{id}',
             'auth' => 'auth',
             'token' => 'token'
