@@ -43,13 +43,13 @@ class FacebookService
         return $response;
     }
 
-    public function getCampaigns($params, $tokens, $fields)
+    public function getCampaigns(array $params,array $tokens,array $fields)
     {
         return $this->_baseService
-            ->getSlug('campaigns', $params)
-            ->getToken($tokens)
-            ->getField($fields)
-            ->get();
+                ->slug('campaigns', $params)
+                ->token($tokens)
+                ->query($fields)
+                ->get();
     }
 
     public function getLongTimeToken($fields)
