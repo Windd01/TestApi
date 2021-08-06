@@ -3,7 +3,9 @@
 namespace Khapu\CurlPlatform\Http\Controllers;
 use App\Http\Controllers\Controller;
 use App\Http\Controllers;
+use App\Jobs\SyncAccountFacebook;
 use App\Models\Account;
+use App\Models\Campaign;
 use Illuminate\Http\Request;
 use Khapu\CurlPlatform\Services\Reports\FacebookService;
 
@@ -34,11 +36,11 @@ class TestController extends Controller
         // ];
 
         $token = [
-            'access_token' => 'EAAFxHGbIZBAcBAC4eMeCsaNGgMHl9toCCnYn8JDq9dnhl1DoTZAXoinTsZBnB4CiZApl3DD1EFgyZAhRNqwKo0o6e84puxZB85ERzfooKIwNobyH9O3He1YPO8aR8DNfYyBopw2Vh3aE1x9UT3GDIpBgmnciZAlaTe3Lvtr4AZAZCSgHgNgxw1F4K',
+            'access_token' => 'EAAFxHGbIZBAcBAPLBgCVHZAQaX6k8MCNbdM0aQMAZBniM97iBqanf05LA7b2PYyudrUD2YyyW1EBhzs9HZAI6qIzHsuuS3gTNVCQ0jufoISkaCvLZApWRN0IkE8MFCiKtk60qeOLO9OjAZBLG08wrXbBT9dlQEY8px3qZCponbqzAZDZD',
         ];
 
 //        dd(Account::all());
-        $params = ['id' => '23844819598520694'];
+        $params = ['id' => '23844812388250694'];
         // dd($testDetail->getLongTimeToken($fields));
         dd($this->facebookService->getInsight($params, $token, $fields));
     }
@@ -85,5 +87,42 @@ class TestController extends Controller
 
             dd($this->facebookService->getAds($params, $token, $fields));
         }
+    }
+
+    public function campaigns($facebookId)
+    {
+        $facebookAccount = Account::where('facebook_id', $facebookId)->first();
+        if (!empty($facebookAccount)) {
+            $fields = [
+                'fields' => 'name,insights,effective_status,objective,total_count',
+            ];
+
+            $token = [
+                'access_token' => $facebookAccount->access_token,
+            ];
+
+            $params = [
+                'id' => $facebookId,
+            ];
+
+            dd($this->facebookService->getCampaigns($params, $token, $fields));
+        }
+    }
+
+    public function saveDataByAccount($facebookId)
+    {
+        $facebookAccount = Account::where('facebook_id', $facebookId)->first();
+        if (!empty($facebookAccount)) {
+
+            dispatch( new SyncAccountFacebook($facebookAccount, $facebookId))->onQueue('facebook');
+
+
+
+        }
+        dd('queue working');
+        // lưu acc
+        // foreach dât cam
+        // lưu cam
+
     }
 }

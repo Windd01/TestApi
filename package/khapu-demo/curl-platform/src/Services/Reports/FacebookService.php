@@ -44,6 +44,15 @@ class FacebookService extends BaseService
         return $response;
     }
 
+    public function getCampaigns($params, $tokens, $fields)
+    {
+        return $this->_baseService
+            ->getSlug('campaigns', $params)
+            ->getToken($tokens)
+            ->getField($fields)
+            ->get();
+    }
+
     public function getLongTimeToken($fields)
     {
         $response = $this->_baseService->getSlug('long_time_token')

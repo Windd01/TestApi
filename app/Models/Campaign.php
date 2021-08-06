@@ -8,8 +8,16 @@ class Campaign extends Model
 {
     protected $fillable = [
         'name',
-        'facebook_id',
-        'objective',
-        'effective_status',
+        'source_id',
+        'clicks',
+        'reach',
+        'cpm',
+        'cpc',
+        'ctr',
+        'spend',
+        'impressions',
+        'account_id',
+        'source_type',
+        'date',
     ];
 }

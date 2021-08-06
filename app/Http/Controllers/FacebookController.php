@@ -16,7 +16,7 @@ class FacebookController extends Controller
         foreach($data->data as $campaign) {
             $input = [
                 'name' => $campaign->name,
-                'facebook_id' => $campaign->id,
+                'channel_id' => $campaign->id,
                 'effective_status' => $campaign->effective_status,
                 'objective' => $campaign->objective
             ];

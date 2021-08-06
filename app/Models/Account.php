@@ -17,12 +17,10 @@ class Account extends Model
         'min_daily_budget',
         'min_campaign_group_spend_cap',
         'spend_cap',
-        'refresh_token',
-        'develop_token',
         'access_token',
-        'channel_id',
         'fb_exchange_token',
         'client_id',
         'client_secret',
+        'channel_id',
     ];
 }

@@ -7,7 +7,8 @@ return [
             'account' => '{id}',
             'long_time_token' => 'oauth/access_token',
             'insights' => '{id}/insights',
-            'ads' => '{id}/ads'
+            'ads' => '{id}/ads',
+            'campaigns' => '{id}/campaigns',
         ],
     ]
 ];

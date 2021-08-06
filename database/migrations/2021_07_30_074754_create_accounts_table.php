@@ -15,17 +15,15 @@ class CreateAccountsTable extends Migration
     {
         Schema::create('accounts', function (Blueprint $table) {
             $table->id();
-            $table->string('facebook_id')->unique();
-            $table->string('name');
-            $table->integer('account_status');
-            $table->integer('amount_spent');
-            $table->integer('balance');
-            $table->integer('disable_reason');
-            $table->integer('min_daily_budget');
-            $table->string('min_campaign_group_spend_cap');
-            $table->string('spend_cap');
-            $table->string('refresh_token');
-            $table->string('develop_token');
+            $table->string('facebook_id')->nullable()->unique();
+            $table->string('name')->nullable();
+            $table->integer('account_status')->nullable();
+            $table->integer('amount_spent')->nullable();
+            $table->integer('balance')->nullable();
+            $table->integer('disable_reason')->nullable();
+            $table->integer('min_daily_budget')->nullable();
+            $table->string('min_campaign_group_spend_cap')->nullable();
+            $table->string('spend_cap')->nullable();
             $table->string('access_token');
             $table->string('fb_exchange_token');
             $table->string('client_id');
