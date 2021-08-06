@@ -10,6 +10,7 @@ use Illuminate\Queue\InteractsWithQueue;
 use Illuminate\Queue\SerializesModels;
 use App\Models\Campaign;
 use Illuminate\Support\Facades\Log;
+use Khapu\CurlPlatform\Services\Reports\FacebookService;
 
 class SyncCampaignsFacebook implements ShouldQueue
 {

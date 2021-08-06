@@ -113,11 +113,7 @@ class TestController extends Controller
     {
         $facebookAccount = Account::where('facebook_id', $facebookId)->first();
         if (!empty($facebookAccount)) {
-
             dispatch( new SyncAccountFacebook($facebookAccount, $facebookId))->onQueue('facebook');
-
-
-
         }
         dd('queue working');
         // lưu acc

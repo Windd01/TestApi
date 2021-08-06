@@ -45,7 +45,7 @@ class FacebookService
 
     public function getCampaigns(array $params,array $tokens,array $fields)
     {
-        return $this->_baseService
+        return $this->_platformService
                 ->slug('campaigns', $params)
                 ->token($tokens)
                 ->query($fields)
@@ -54,7 +54,7 @@ class FacebookService
 
     public function getLongTimeToken($fields)
     {
-        $response = $this->_baseService->getSlug('long_time_token')
+        $response = $this->_platformService->getSlug('long_time_token')
                                         ->getField($fields)
                                         ->get();
         return $response;

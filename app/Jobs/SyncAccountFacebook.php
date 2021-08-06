@@ -9,8 +9,6 @@ use Illuminate\Foundation\Bus\Dispatchable;
 use Illuminate\Queue\InteractsWithQueue;
 use Illuminate\Queue\SerializesModels;
 use Khapu\CurlPlatform\Services\Reports\FacebookService;
-use App\Models\Campaign;
-use Illuminate\Support\Facades\Log;
 
 class SyncAccountFacebook implements ShouldQueue
 {
