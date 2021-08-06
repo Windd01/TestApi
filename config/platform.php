@@ -1,5 +1,20 @@
 <?php
+
 return [
+    /**
+     * platformName => [
+     *  'host' =>[
+     *      <index> => <host>
+     *  ],
+     *  'version' =>[<version>, ],
+     *  'slugs' =>[
+     *              <index> => <slug>, 
+     *    If there is unstatic elements in slug, those elements need to 
+     *    be typed with sample {<name element>}
+     *  ],
+     * ]
+     */
+
     'facebook' => [
         'host' => [
             'default' => 'graph.facebook.com'
@@ -25,10 +40,13 @@ return [
             'v8',
             'v2'
         ],
-        'slugs' => [
+        'slug' => [
             'account' => 'customer/{id}',
             'auth' => 'auth',
             'token' => 'token'
         ]
     ]
+    /**
+ * Enter new platform here
+ */
 ];
