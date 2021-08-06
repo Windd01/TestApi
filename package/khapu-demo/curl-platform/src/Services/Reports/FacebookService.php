@@ -2,44 +2,43 @@
 
 namespace Khapu\CurlPlatform\Services\Reports;
 
-use Khapu\CurlPlatform\Services\BaseService;
+use Khapu\CurlPlatform\Services\Reports\PlatformService;
 
-class FacebookService extends BaseService
+class FacebookService 
 {
     private $_config;
     
-    private $_baseService;
+    private $_platformService;
 
     public function __construct()
     {
-        $this->_baseService = new BaseService('facebook',30);
+        $this->_platformService = new PlatformService('facebook',30);
 
-        $this->_config = $this->_baseService->getConfig();
     }
 
-    public function getInsight($params, $tokens, $fields)
+    public function getInsight(array $params, array $tokens, array $query)
     {
-        $response = $this->_baseService->getSlug('insights', $params)
-                                        ->getToken($tokens)
-                                        ->getField($fields)
+        $response = $this->_platformService->query($query)
+                                        ->slug('insights', $params)
+                                        ->token($tokens)
                                         ->get();
         return $response;
     }
 
-    public function getAccount($params, $tokens, $fields)
+    public function getAccount(array $params, array $tokens, array $query)
     {
-        $response = $this->_baseService->getSlug('account', $params)
-                                        ->getToken($tokens)
-                                        ->getField($fields)
+        $response = $this->_platformService->slug('account', $params)
+                                        ->token($tokens)
+                                        ->query($query)
                                         ->get();
         return $response;
     }
 
-    public function getAds($params, $tokens, $fields)
+    public function getAds(array $params, array $tokens, array $query)
     {
-        $response = $this->_baseService->getSlug('ads', $params)
-                                        ->getToken($tokens)
-                                        ->getField($fields)
+        $response = $this->_platformService->slug('ads', $params)
+                                        ->token($tokens)
+                                        ->query($query)
                                         ->get();
         return $response;
     }

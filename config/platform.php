@@ -1,8 +1,27 @@
 <?php
+
 return [
+    /**
+     * platformName => [
+     *  'host' =>[
+     *      <index> => <host>
+     *  ],
+     *  'version' =>[<version>, ],
+     *  'slugs' =>[
+     *              <index> => <slug>, 
+     *    If there is unstatic elements in slug, those elements need to 
+     *    be typed with sample {<name element>}
+     *  ],
+     * ]
+     */
+
     'facebook' => [
-        'host' => 'graph.facebook.com',
-        'version' => 'v11.0',
+        'host' => [
+            'default' => 'graph.facebook.com'
+        ],
+        'version' => [
+            'v11.0'
+        ],
         'slugs' => [
             'account' => '{id}',
             'long_time_token' => 'oauth/access_token',
@@ -10,5 +29,25 @@ return [
             'ads' => '{id}/ads',
             'campaigns' => '{id}/campaigns',
         ],
+    ],
+
+    'google' => [
+        'host' => [
+            'ads' => 'googleads.googleapis.com',
+            'account' => 'accounts.google.com',
+            'auth' => 'oauth2.googleapis.com',
+        ],
+        'version' => [
+            'v8',
+            'v2'
+        ],
+        'slug' => [
+            'account' => 'customer/{id}',
+            'auth' => 'auth',
+            'token' => 'token'
+        ]
     ]
+    /**
+ * Enter new platform here
+ */
 ];
